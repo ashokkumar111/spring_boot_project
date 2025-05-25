@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  # Spring Boot app service
+  spring-boot-app:
+    build: .
+    image: student-app
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mysql
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/studentdb
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: rootpassword
+      SPRING_PROFILES_ACTIVE: prod
+    networks:
+      - app-network
+
+  # MySQL service
+  mysql:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: studentdb
+      MYSQL_USER: root
+      MYSQL_PASSWORD: rootpassword
+    ports:
+      - "3307:3306"  # Map host port 3307 to container port 3306
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
