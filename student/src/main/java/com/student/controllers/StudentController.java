@@ -22,6 +22,7 @@ public class StudentController {
     @PostMapping
     public ResponseEntity<Student> createStudent(@RequestBody Student student) {
         Student createdStudent = studentService.create(student);
+
         return new ResponseEntity<>(createdStudent, HttpStatus.CREATED);
     }
     @GetMapping
@@ -30,8 +31,8 @@ public class StudentController {
       return new ResponseEntity<>(studentList,HttpStatus.OK);
     }
     @GetMapping("/user/{name}")
-    public List<Student> getByName(@PathVariable("name") String name1){
-      return studentService.getByName(name1);
+    public ResponseEntity<List<Student>> getByName(@PathVariable("name") String name1){
+      return new ResponseEntity<>(studentService.getByName(name1),HttpStatus.OK);
     }
     @GetMapping("/{contact_number}")
     public List<Student> getStudentByContactNumberFunc(@PathVariable("contact_number") String mobile){
