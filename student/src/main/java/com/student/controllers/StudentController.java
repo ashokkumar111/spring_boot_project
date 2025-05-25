@@ -25,8 +25,9 @@ public class StudentController {
         return new ResponseEntity<>(createdStudent, HttpStatus.CREATED);
     }
     @GetMapping
-    public List<Student> getAllStudent(){
-     return studentService.getAllStudent();
+    public ResponseEntity<List<Student>> getAllStudent(){
+        List<Student> studentList=studentService.getAllStudent();
+      return new ResponseEntity<>(studentList,HttpStatus.OK);
     }
     @GetMapping("/user/{name}")
     public List<Student> getByName(@PathVariable("name") String name1){
